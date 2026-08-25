@@ -2,10 +2,10 @@ name: Discord Weekly Schedule
 
 on:
   schedule:
-    # Se ejecuta todos los lunes a las 13:00 UTC
-    # 13:00 UTC son las 10:00 AM en Argentina (Hora local actual)
+    # Runs every Monday at 1:00 p.m. UTC    
+# 1:00 p.m. UTC is 10:00 a.m. in Argentina (current local time)
     - cron: '0 13 * * 1'
-  workflow_dispatch: # Este comando te permite ejecutar el bot a mano desde GitHub con un botón para probarlo
+  workflow_dispatch: # This command lets you run the bot manually from GitHub using a button to test it
 
 jobs:
   send_message:
@@ -18,7 +18,7 @@ jobs:
       - name: Configurar entorno Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Usamos una versión reciente que incluye Fetch nativo
+          node-version: '24' # We use a recent version that includes native Fetch
           
       - name: Ejecutar script de Discord
         env:
