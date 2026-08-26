@@ -51,8 +51,7 @@ const fechaEvento = new Date(fechaEventoString);
 const unixTimestamp = Math.floor(fechaEvento.getTime() / 1000);
 
 // 6. Preparing the final message with formatting
-/* const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} de la mano del ${tareaSemana.instructor}\n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia`; */
-const mensaje = `test lorem ipsum dolor sit amet, \n\n consectetur adipiscing elit.`;
+const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} de la mano del ${tareaSemana.instructor}\n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia`;
 
 // 7. Set up a secure URL to force Discord to return the message data
 const urlSegura = new URL(webhookUrl);
