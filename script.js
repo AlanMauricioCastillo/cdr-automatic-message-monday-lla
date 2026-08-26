@@ -1,4 +1,5 @@
 const webhookUrl = process.env.WEBHOOK_URL;
+const botToken = process.env.BOT_TOKEN;
 
 if (!webhookUrl) {
   console.error("❌ Faltan variables de entorno (WEBHOOK_URL o ROLE_ID).");
@@ -15,7 +16,7 @@ const instructores = {
 };
 
 // 2. Base date: Monday, August 3, 2026 (Month 7 in JS)
-const fechaBase = new Date(Date.UTC(2026, 7, 3)); 
+const fechaBase = new Date(Date.UTC(2026, 7, 3));
 const ahora = new Date();
 
 // 3. Calculation of the index for the 8-week macrocycle
@@ -58,15 +59,43 @@ fetch(webhookUrl, {
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ content: mensaje })
 })
-.then(async response => {
-  if (response.ok) {
-    console.log(`✅ Mensaje enviado: CDR de ${tareaSemana.cdr}`);
-  } else {
-    console.error(`❌ Error al enviar. Código: ${response.status}`);
+  .then(async response => {
+        if (response.ok) {
+          console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
+      const data = await response.json();
+      console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
+
+      // 7-1. If the Bot Token is configured, add the automatic reaction
+      if (botToken) {
+        const channelId = data.channel_id;
+        const messageId = data.id;
+
+        // We use the green checkmark by default. `encodeURIComponent` is required to send emojis in URLs.
+        const emoji = encodeURIComponent("✅");
+
+        const reactUrl = `https://discord.com/api/v10/channels/${channelId}/messages/${messageId}/reactions/${emoji}/@me`;
+
+        const reactResponse = await fetch(reactUrl, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bot ${botToken}`,
+            'Content-Length': '0'
+          }
+        });
+
+        if (reactResponse.ok) {
+          console.log("✅ Automatic attendance response successfully added.");
+        } else {
+          const errorReact = await reactResponse.text();
+          console.error(`❌ Error attempting to react. Code: ${reactResponse.status}. Detail: ${errorReact}`);
+        }
+      }
+    } else {
+      console.error(`❌ Error sending message. Code: ${response.status}`);
+      process.exit(1);
+    }
+  })
+  .catch(error => {
+    console.error("❌ Network or execution error:", error);
     process.exit(1);
-  }
-})
-.catch(error => {
-  console.error("❌ Error de red o ejecución:", error);
-  process.exit(1);
-});
+  });
