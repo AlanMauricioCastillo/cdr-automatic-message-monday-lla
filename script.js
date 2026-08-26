@@ -60,8 +60,8 @@ fetch(webhookUrl, {
   body: JSON.stringify({ content: mensaje })
 })
   .then(async response => {
-        if (response.ok) {
-          console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
+    if (response.ok) {
+      console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
       const data = await response.json();
       console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
 
