@@ -18,7 +18,7 @@ jobs:
       - name: Configurar entorno Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Usamos una versión reciente que incluye Fetch nativo
+          node-version: '24' # Usamos una versión reciente que incluye Fetch nativo
           
       - name: Ejecutar script de Discord
         env:
