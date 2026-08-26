@@ -77,9 +77,6 @@ fetch(urlSegura.toString(), {
       // 8-1. If the Bot Token is configured, add the automatic reaction
       if (botToken) {
 
-        console.log("datadatadata", data)
-        console.info("datadatadata", data)
-
         const channelId = data.channel_id;
         const messageId = data.id;
 
