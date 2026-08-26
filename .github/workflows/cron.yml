@@ -23,6 +23,5 @@ jobs:
       - name: Ejecutar script de Discord
         env:
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-          ROLE_ID: ${{ secrets.ROLE_ID }}
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: node script.js
