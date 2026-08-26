@@ -2,7 +2,7 @@ const webhookUrl = process.env.WEBHOOK_URL;
 const botToken = process.env.BOT_TOKEN;
 
 if (!webhookUrl) {
-  console.error("❌ Faltan variables de entorno (WEBHOOK_URL o ROLE_ID).");
+  console.error("❌ The environment variable is missing WEBHOOK_URL.");
   process.exit(1);
 }
 
@@ -53,18 +53,28 @@ const unixTimestamp = Math.floor(fechaEvento.getTime() / 1000);
 // 6. Preparing the final message with formatting
 const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} de la mano del ${tareaSemana.instructor}\n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia`;
 
-// 7. Webhook Dispatch
-fetch(webhookUrl, {
+// 7. Set up a secure URL to force Discord to return the message data
+const urlSegura = new URL(webhookUrl);
+urlSegura.searchParams.set('wait', 'true');
+
+// 8. Webhook Dispatch
+fetch(urlSegura.toString(), {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({ content: mensaje })
 })
   .then(async response => {
     if (response.ok) {
+      // Error prevention: If it returns 204 anyway, we stop before the JSON
+      if (response.status === 204) {
+         console.error("❌ Discord devolvió 204 (Vacío). El parámetro wait=true fue ignorado.");
+         process.exit(1);
+      }
+
       const data = await response.json();
       console.log(`✅ Message sent: CDR of ${tareaSemana.cdr}`);
 
-      // 7-1. If the Bot Token is configured, add the automatic reaction
+      // 8-1. If the Bot Token is configured, add the automatic reaction
       if (botToken) {
         const channelId = data.channel_id;
         const messageId = data.id;
@@ -90,7 +100,8 @@ fetch(webhookUrl, {
         }
       }
     } else {
-      console.error(`❌ Error sending message. Code: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`❌ Error sending message. Code: ${response.status}. Detail: ${errorText}`);
       process.exit(1);
     }
   })
