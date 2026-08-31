@@ -4,7 +4,7 @@ on:
   schedule:
     # Se ejecuta todos los lunes a las 13:00 UTC
     # 13:00 UTC son las 10:00 AM en Argentina (Hora local actual)
-    - cron: '45 14 * * 1'
+    # - cron: '45 14 * * 1' // comented to desabled it
   workflow_dispatch: # Este comando te permite ejecutar el bot a mano desde GitHub con un botón para probarlo
 
 jobs:
