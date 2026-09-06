@@ -45,8 +45,7 @@ export default defineComponent({
     const unixTimestamp = Math.floor(new Date(`${anio}-${mes}-${dia}T22:30:00-03:00`).getTime() / 1000);
 
     // Original message format with instructor mention
-    // const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} de la mano del ${tareaSemana.instructor}\n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia \n\n**NOTA:** Si no llegamos a 4 reacciones de reclutas, el CDR se cancela y se deberá esperar a que se complete el ciclo para que vuelva a tocar el mismo CDR.`;
-    const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} \n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia \n\n**NOTA:** Si no llegamos a 4 reacciones de reclutas, el CDR se cancela y se deberá esperar a que se complete el ciclo para que vuelva a tocar el mismo CDR.`;
+    const mensaje = `<@&725410477777354782> hoy CDR de ${tareaSemana.cdr} de la mano del ${tareaSemana.instructor}\n\nHoy <t:${unixTimestamp}:t> (tu hora local) - Reaccionen al mensaje para confirmar asistencia \n\n**NOTA:** Si no llegamos a 4 reacciones de reclutas, el CDR se cancela y se deberá esperar a que se complete el ciclo para que vuelva a tocar el mismo CDR.`;
 
     const urlSegura = new URL(this.webhookUrl);
     urlSegura.searchParams.set("wait", "true");
