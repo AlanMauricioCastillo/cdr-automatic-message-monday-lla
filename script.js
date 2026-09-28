@@ -31,7 +31,7 @@ export default defineComponent({
       { cdr: "INMT", instructor: instructores.alan},
       { cdr: "CQB", instructor: instructores.strood },
       { cdr: "INMT", instructor: instructores.eduardo},
-      { cdr: "CQB", instructor: instructores.vermis },
+      { cdr: "CQB", instructor: instructores.strood },
     ];
 
     const tareaSemana = cronograma[indice];
